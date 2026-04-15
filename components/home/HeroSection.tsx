@@ -61,7 +61,7 @@ export default function HeroSection() {
             className="inline-block text-xs font-semibold tracking-widest uppercase mb-6"
             style={{ color: '#C4A882' }}
           >
-            Premium Schoonheidssalon Amsterdam
+            Premium Schoonheidssalon Amsterdam/TEST
           </motion.span>
 
           {/* Decorative line */}
