@@ -1,0 +1,358 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-cream: #FAFAF8;
+  --color-gold: #C4A882;
+  --color-gold-dark: #A8865C;
+  --color-blush: #F2E8DF;
+  --color-deep: #2C2A26;
+  --color-muted: #7D7168;
+  --font-display: 'Playfair Display', serif;
+  --font-sans: 'DM Sans', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FAFAF8;
+  color: #2C2A26;
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography utilities */
+.font-display {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-sans {
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Button base styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: #C4A882;
+  color: #FAFAF8;
+  padding: 0.75rem 2rem;
+  border-radius: 0.125rem;
+}
+
+.btn-primary:hover {
+  background-color: #A8865C;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: #C4A882;
+  border: 1px solid #C4A882;
+  padding: 0.75rem 2rem;
+  border-radius: 0.125rem;
+}
+
+.btn-outline:hover {
+  background-color: #C4A882;
+  color: #FAFAF8;
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: #C4A882;
+  padding: 0.75rem 2rem;
+}
+
+.btn-ghost:hover {
+  color: #A8865C;
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes scrollBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+/* Animation utility classes */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.animate-scroll-bounce {
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+/* Luxury gold gradient text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #C4A882 0%, #A8865C 50%, #C4A882 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Image hover zoom container */
+.img-zoom-container {
+  overflow: hidden;
+}
+
+.img-zoom-container img {
+  transition: transform 0.6s ease;
+}
+
+.img-zoom-container:hover img {
+  transform: scale(1.05);
+}
+
+/* Decorative divider */
+.gold-divider {
+  width: 60px;
+  height: 2px;
+  background-color: #C4A882;
+  margin: 1rem auto;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid #C4A882;
+  outline-offset: 2px;
+}
+
+/* Hover link utilities */
+.link-gold {
+  color: #7D7168;
+  transition: color 0.2s ease;
+}
+
+.link-gold:hover {
+  color: #C4A882;
+}
+
+.link-gold-bright {
+  color: #C4A882;
+  transition: color 0.2s ease;
+}
+
+.link-gold-bright:hover {
+  color: #A8865C;
+}
+
+.link-white-faded {
+  color: #9E9188;
+  transition: color 0.2s ease;
+}
+
+.link-white-faded:hover {
+  color: #C4A882;
+}
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #C4A882;
+  color: #FAFAF8;
+  border-radius: 2px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  transition: background-color 0.3s ease;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn-gold:hover {
+  background-color: #A8865C;
+}
+
+.btn-gold-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: #C4A882;
+  border: 1px solid #C4A882;
+  border-radius: 2px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn-gold-outline:hover {
+  background-color: #C4A882;
+  color: #FAFAF8;
+}
+
+.btn-dark-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: #FAFAF8;
+  border: 1px solid rgba(250,250,248,0.4);
+  border-radius: 2px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  transition: border-color 0.3s ease;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn-dark-outline:hover {
+  border-color: #FAFAF8;
+}
+
+.service-card {
+  background: white;
+  border-radius: 2px;
+  box-shadow: 0 2px 20px rgba(44,42,38,0.06);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.service-card:hover {
+  box-shadow: 0 8px 40px rgba(44,42,38,0.12);
+  transform: translateY(-4px);
+  border-bottom-color: #C4A882;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAFAF8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C4A882;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A8865C;
+}
+
+/* Form input styles */
+.form-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid #E5DDD5;
+  border-radius: 0.125rem;
+  background-color: #FAFAF8;
+  color: #2C2A26;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9375rem;
+  transition: border-color 0.2s ease;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: #C4A882;
+}
+
+.form-input::placeholder {
+  color: #B0A89E;
+}
+
+/* Section padding */
+.section-padding {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+/* Container */
+.container-custom {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-custom {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
