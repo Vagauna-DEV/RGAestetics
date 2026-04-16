@@ -5,65 +5,68 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 import SectionHeader from '@/components/ui/SectionHeader';
+import { localizePath, type Locale } from '@/lib/i18n';
 
-const galleryImages = [
-  {
-    src: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=80',
-    alt: 'Schoonheidsbehandeling interieur',
-    large: true,
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=600&q=80',
-    alt: 'Nagel behandeling',
-    large: false,
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80',
-    alt: 'Gezichtsbehandeling',
-    large: false,
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=600&q=80',
-    alt: 'Beauty behandeling',
-    large: false,
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&q=80',
-    alt: 'Laser ontharing',
-    large: false,
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80',
-    alt: 'Salon sfeer',
-    large: false,
-  },
-];
-
-export default function GalleryPreview() {
+export default function GalleryPreview({ locale = 'nl' }: { locale?: Locale }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isEnglish = locale === 'en';
+  const galleryImages = [
+    {
+      src: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=80',
+      alt: isEnglish ? 'Beauty treatment interior' : 'Schoonheidsbehandeling interieur',
+      large: true,
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=600&q=80',
+      alt: isEnglish ? 'Nail treatment' : 'Nagel behandeling',
+      large: false,
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80',
+      alt: isEnglish ? 'Facial treatment' : 'Gezichtsbehandeling',
+      large: false,
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=600&q=80',
+      alt: isEnglish ? 'Beauty treatment' : 'Beauty behandeling',
+      large: false,
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&q=80',
+      alt: isEnglish ? 'Laser hair removal' : 'Laser ontharing',
+      large: false,
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80',
+      alt: isEnglish ? 'Salon atmosphere' : 'Salon sfeer',
+      large: false,
+    },
+  ];
 
   return (
     <section className="section-padding" style={{ backgroundColor: '#FAFAF8' }}>
       <div className="container-custom">
-        {/* Header */}
         <div className="text-center mb-12">
           <SectionHeader
-            eyebrow="Onze Stijl"
-            title="Een blik in onze salon"
-            subtitle="Laat u inspireren door de sfeer en resultaten van Lumière Studio."
+            eyebrow={isEnglish ? 'Our Style' : 'Onze Stijl'}
+            title={isEnglish ? 'A look inside our salon' : 'Een blik in onze salon'}
+            subtitle={
+              isEnglish
+                ? 'Explore the atmosphere and treatment results that define Lumière Studio.'
+                : 'Laat u inspireren door de sfeer en resultaten van Lumière Studio.'
+            }
             centered
           />
         </div>
 
-        {/* Gallery grid */}
         <div ref={ref} className="grid grid-cols-2 md:grid-cols-3 gap-3 lg:gap-4">
-          {galleryImages.map((image, i) => (
+          {galleryImages.map((image, index) => (
             <motion.div
-              key={i}
+              key={`${image.src}-${index}`}
               initial={{ opacity: 0, scale: 0.96 }}
               animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
-              transition={{ delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: index * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className={`relative overflow-hidden group ${image.large ? 'col-span-2 row-span-2' : ''}`}
               style={{
                 borderRadius: '2px',
@@ -81,7 +84,6 @@ export default function GalleryPreview() {
                 }}
                 className="group-hover:scale-105"
               />
-              {/* Hover overlay */}
               <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-center justify-center"
                 style={{ backgroundColor: 'rgba(44,42,38,0.35)' }}
@@ -111,7 +113,6 @@ export default function GalleryPreview() {
           ))}
         </div>
 
-        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -119,7 +120,7 @@ export default function GalleryPreview() {
           className="mt-10 text-center"
         >
           <Link
-            href="/galerij"
+            href={localizePath('/galerij', locale)}
             className="inline-flex items-center justify-center px-8 py-3 text-sm font-medium tracking-wide transition-all duration-300"
             style={{
               border: '1px solid #C4A882',
@@ -135,7 +136,7 @@ export default function GalleryPreview() {
               (e.currentTarget as HTMLAnchorElement).style.color = '#C4A882';
             }}
           >
-            Bekijk alle foto&apos;s
+            {isEnglish ? 'View full gallery' : "Bekijk alle foto's"}
           </Link>
         </motion.div>
       </div>

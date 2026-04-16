@@ -3,6 +3,7 @@ import { Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import DocumentLanguage from "@/components/layout/DocumentLanguage";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -80,6 +81,7 @@ export default function RootLayout({
         className="min-h-screen flex flex-col"
         style={{ backgroundColor: "#FAFAF8", fontFamily: "'DM Sans', sans-serif" }}
       >
+        <DocumentLanguage />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

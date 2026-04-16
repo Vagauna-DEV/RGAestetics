@@ -3,6 +3,7 @@
 import { motion, type Variants } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { localizePath, type Locale } from '@/lib/i18n';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -24,20 +25,41 @@ const itemVariants: Variants = {
   },
 };
 
-export default function HeroSection() {
+export default function HeroSection({ locale = 'nl' }: { locale?: Locale }) {
+  const copy =
+    locale === 'en'
+      ? {
+          alt: 'Lumière Studio interior',
+          eyebrow: 'Premium Beauty Salon Amsterdam',
+          titleTop: 'Elegance you',
+          titleBottom: 'can feel',
+          subtitle:
+            'Discover our exclusive laser hair removal, gel nail, and facial treatments in the heart of Amsterdam',
+          primaryCta: 'Book Now',
+          secondaryCta: 'Our Services',
+        }
+      : {
+          alt: 'Lumière Studio interieur',
+          eyebrow: 'Premium Schoonheidssalon Amsterdam',
+          titleTop: 'Verfijning die',
+          titleBottom: 'je voelt',
+          subtitle:
+            'Ontdek onze exclusieve behandelingen voor laser ontharing, gel nagels en gezichtsverzorging in het hart van Amsterdam',
+          primaryCta: 'Afspraak Maken',
+          secondaryCta: 'Onze Diensten',
+        };
+
   return (
     <section className="relative w-full h-screen min-h-[640px] flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
       <div className="absolute inset-0">
         <Image
           src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1920&q=80"
-          alt="Lumière Studio interieur"
+          alt={copy.alt}
           fill
           priority
           unoptimized
           style={{ objectFit: 'cover', objectPosition: 'center' }}
         />
-        {/* Gradient overlay */}
         <div
           className="absolute inset-0"
           style={{
@@ -47,7 +69,6 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 container-custom text-center">
         <motion.div
           variants={containerVariants}
@@ -55,23 +76,20 @@ export default function HeroSection() {
           animate="visible"
           className="flex flex-col items-center"
         >
-          {/* Eyebrow */}
           <motion.span
             variants={itemVariants}
             className="inline-block text-xs font-semibold tracking-widest uppercase mb-6"
             style={{ color: '#C4A882' }}
           >
-            Premium Schoonheidssalon Amsterdam
+            {copy.eyebrow}
           </motion.span>
 
-          {/* Decorative line */}
           <motion.div
             variants={itemVariants}
             className="w-16 h-px mb-8"
             style={{ backgroundColor: '#C4A882' }}
           />
 
-          {/* Heading */}
           <motion.h1
             variants={itemVariants}
             className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-none mb-8"
@@ -82,28 +100,25 @@ export default function HeroSection() {
               fontStyle: 'italic',
             }}
           >
-            Verfijning die
+            {copy.titleTop}
             <br />
-            <span style={{ color: '#C4A882' }}>je voelt</span>
+            <span style={{ color: '#C4A882' }}>{copy.titleBottom}</span>
           </motion.h1>
 
-          {/* Subtitle */}
           <motion.p
             variants={itemVariants}
             className="text-base sm:text-lg max-w-xl leading-relaxed mb-10"
             style={{ color: '#D4C9BC' }}
           >
-            Ontdek onze exclusieve behandelingen voor laser ontharing, gel nagels
-            en gezichtsverzorging in het hart van Amsterdam
+            {copy.subtitle}
           </motion.p>
 
-          {/* CTA Buttons */}
           <motion.div
             variants={itemVariants}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Link
-              href="/contact"
+              href={localizePath('/contact', locale)}
               className="inline-flex items-center justify-center px-8 py-3.5 text-sm font-medium tracking-wide transition-all duration-300"
               style={{
                 backgroundColor: '#C4A882',
@@ -117,10 +132,10 @@ export default function HeroSection() {
                 (e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#C4A882';
               }}
             >
-              Afspraak Maken
+              {copy.primaryCta}
             </Link>
             <Link
-              href="/diensten"
+              href={localizePath('/diensten', locale)}
               className="inline-flex items-center justify-center px-8 py-3.5 text-sm font-medium tracking-wide transition-all duration-300"
               style={{
                 backgroundColor: 'transparent',
@@ -137,13 +152,12 @@ export default function HeroSection() {
                 (e.currentTarget as HTMLAnchorElement).style.backgroundColor = 'transparent';
               }}
             >
-              Onze Diensten
+              {copy.secondaryCta}
             </Link>
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

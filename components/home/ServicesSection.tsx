@@ -5,86 +5,78 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 import SectionHeader from '@/components/ui/SectionHeader';
+import { localizePath, type Locale } from '@/lib/i18n';
 
-const services = [
-  {
-    title: 'Laser Ontharing',
-    description:
-      'Permanent en pijnvrij ontharen met de nieuwste laserтехнologie. Geschikt voor alle huidtypen, met langdurige resultaten.',
-    href: '/diensten/laser-ontharing',
-    image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&q=80',
-    imageAlt: 'Laser ontharing behandeling',
-  },
-  {
-    title: 'Gel Nagels',
-    description:
-      'Prachtige, duurzame gel nagels die weken mooi blijven. Van klassiek naturel tot opvallende nail art — uw stijl, onze expertise.',
-    href: '/diensten/gelnagels',
-    image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80',
-    imageAlt: 'Gel nagels behandeling',
-  },
-  {
-    title: 'Gezichtsbehandelingen',
-    description:
-      'Op maat gemaakte gezichtsbehandelingen voor een stralende, gezonde huid. Van hydraterende facials tot intensieve anti-aging behandelingen.',
-    href: '/diensten/gezichtsbehandelingen',
-    image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80',
-    imageAlt: 'Gezichtsbehandeling',
-  },
-];
-
-export default function ServicesSection() {
+export default function ServicesSection({ locale = 'nl' }: { locale?: Locale }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isEnglish = locale === 'en';
+  const services = [
+    {
+      title: isEnglish ? 'Laser Hair Removal' : 'Laser Ontharing',
+      description: isEnglish
+        ? 'Smooth, long-lasting hair reduction with modern laser technology, suitable for all skin types.'
+        : 'Permanent en pijnvrij ontharen met de nieuwste lasertechnologie. Geschikt voor alle huidtypen, met langdurige resultaten.',
+      href: localizePath('/diensten/laser-ontharing', locale),
+      image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&q=80',
+      imageAlt: isEnglish ? 'Laser hair removal treatment' : 'Laser ontharing behandeling',
+    },
+    {
+      title: isEnglish ? 'Gel Nails' : 'Gel Nagels',
+      description: isEnglish
+        ? 'Durable gel nails that stay polished for weeks, from understated neutrals to expressive nail art.'
+        : 'Prachtige, duurzame gel nagels die weken mooi blijven. Van klassiek naturel tot opvallende nail art — uw stijl, onze expertise.',
+      href: localizePath('/diensten/gelnagels', locale),
+      image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80',
+      imageAlt: isEnglish ? 'Gel nails treatment' : 'Gel nagels behandeling',
+    },
+    {
+      title: isEnglish ? 'Facials' : 'Gezichtsbehandelingen',
+      description: isEnglish
+        ? 'Tailored facials designed for radiant, healthy skin, from intense hydration to corrective anti-aging care.'
+        : 'Op maat gemaakte gezichtsbehandelingen voor een stralende, gezonde huid. Van hydraterende facials tot intensieve anti-aging behandelingen.',
+      href: localizePath('/diensten/gezichtsbehandelingen', locale),
+      image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80',
+      imageAlt: isEnglish ? 'Facial treatment' : 'Gezichtsbehandeling',
+    },
+  ];
 
   return (
     <section className="section-padding" style={{ backgroundColor: '#F2E8DF' }}>
       <div className="container-custom">
-        {/* Header */}
         <div className="max-w-xl mb-14">
           <SectionHeader
-            eyebrow="Onze Specialiteiten"
-            title="Behandelingen op maat"
-            subtitle="Elke behandeling wordt zorgvuldig afgestemd op uw unieke huid en wensen."
+            eyebrow={isEnglish ? 'Our Signature Services' : 'Onze Specialiteiten'}
+            title={isEnglish ? 'Treatments tailored to you' : 'Behandelingen op maat'}
+            subtitle={
+              isEnglish
+                ? 'Every treatment is adapted carefully to your skin, routine, and goals.'
+                : 'Elke behandeling wordt zorgvuldig afgestemd op uw unieke huid en wensen.'
+            }
           />
         </div>
 
-        {/* Cards grid */}
-        <div
-          ref={ref}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
-        >
-          {services.map((service, i) => (
+        <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          {services.map((service, index) => (
             <motion.div
               key={service.title}
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-              transition={{ delay: i * 0.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: index * 0.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-              <ServiceCard service={service} />
+              <ServiceCard service={service} locale={locale} />
             </motion.div>
           ))}
         </div>
 
-        {/* View all link */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ delay: 0.6, duration: 0.6 }}
           className="mt-12 text-center"
         >
-          <Link
-            href="/diensten"
-            className="inline-flex items-center gap-2 text-sm font-medium tracking-wide transition-colors duration-300"
-            style={{ color: '#C4A882' }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.color = '#A8865C';
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.color = '#C4A882';
-            }}
-          >
-            Bekijk alle diensten
+          <Link href={localizePath('/diensten', locale)} className="inline-flex items-center gap-2 text-sm font-medium tracking-wide link-gold-bright">
+            {isEnglish ? 'View all services' : 'Bekijk alle diensten'}
             <svg
               width="16"
               height="16"
@@ -105,7 +97,19 @@ export default function ServicesSection() {
   );
 }
 
-function ServiceCard({ service }: { service: (typeof services)[0] }) {
+function ServiceCard({
+  service,
+  locale,
+}: {
+  service: {
+    title: string;
+    description: string;
+    href: string;
+    image: string;
+    imageAlt: string;
+  };
+  locale: Locale;
+}) {
   return (
     <div
       className="group relative bg-white overflow-hidden transition-all duration-400"
@@ -124,7 +128,6 @@ function ServiceCard({ service }: { service: (typeof services)[0] }) {
         (e.currentTarget as HTMLDivElement).style.borderBottom = '2px solid transparent';
       }}
     >
-      {/* Image */}
       <div className="relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
         <Image
           src={service.image}
@@ -139,7 +142,6 @@ function ServiceCard({ service }: { service: (typeof services)[0] }) {
         />
       </div>
 
-      {/* Content */}
       <div className="p-6">
         <h3
           className="text-xl mb-3"
@@ -150,18 +152,8 @@ function ServiceCard({ service }: { service: (typeof services)[0] }) {
         <p className="text-sm leading-relaxed mb-5" style={{ color: '#7D7168' }}>
           {service.description}
         </p>
-        <Link
-          href={service.href}
-          className="inline-flex items-center gap-2 text-sm font-medium transition-colors duration-300"
-          style={{ color: '#C4A882' }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLAnchorElement).style.color = '#A8865C';
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLAnchorElement).style.color = '#C4A882';
-          }}
-        >
-          Meer informatie
+        <Link href={service.href} className="inline-flex items-center gap-2 text-sm font-medium link-gold-bright">
+          {locale === 'en' ? 'Learn more' : 'Meer informatie'}
           <svg
             width="14"
             height="14"
