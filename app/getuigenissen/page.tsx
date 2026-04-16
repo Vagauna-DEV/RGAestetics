@@ -1,61 +1,16 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { testimonials, testimonialStats } from '@/lib/site-data';
 
 export const metadata: Metadata = {
   title: 'Getuigenissen',
-  description:
-    'Lees wat onze klanten zeggen over Lumière Studio. Meer dan 127 tevreden klanten geven ons gemiddeld een 4.9 uit 5 op Google Reviews.',
+  description: `Lees wat onze klanten zeggen over Lumière Studio. Meer dan ${testimonialStats.count} tevreden klanten geven ons gemiddeld een ${testimonialStats.rating} uit 5 op Google Reviews.`,
   openGraph: {
     title: 'Getuigenissen | Lumière Studio',
     description: 'Ervaringen van onze tevreden klanten.',
     url: 'https://lumierestudio.nl/getuigenissen',
   },
 };
-
-const testimonials = [
-  {
-    name: 'Sophie van den Berg',
-    treatment: 'Laser Ontharing',
-    rating: 5,
-    date: 'Maart 2026',
-    quote: 'Na jarenlang scheren was de laser ontharing bij Lumière Studio een openbaring. Perfect resultaat en een warm welkom elke keer. Het team neemt alle tijd om vragen te beantwoorden en je op je gemak te stellen. Ik raad iedereen dit aan!',
-  },
-  {
-    name: 'Isabelle de Vries',
-    treatment: 'Gel Nagels',
-    rating: 5,
-    date: 'Februari 2026',
-    quote: 'De gel nagels houden weken perfect, en het resultaat is altijd zo verfijnd. Ik kom nergens anders meer! Sophie is een absolute professional en heeft echt oog voor detail. Mijn nagels zien er elke keer fantastisch uit.',
-  },
-  {
-    name: 'Emma Bakker',
-    treatment: 'Gezichtsbehandelingen',
-    rating: 5,
-    date: 'Januari 2026',
-    quote: 'Mijn huid is echt getransformeerd na de gezichtsbehandelingen. Het team is professioneel en de sfeer is heerlijk. Na 4 behandelingen zie ik mijn huid er stralender en gezonder uitzien. Een absolute aanrader!',
-  },
-  {
-    name: 'Lisa Smeets',
-    treatment: 'Laser Ontharing',
-    rating: 5,
-    date: 'December 2025',
-    quote: 'Ik was eerst wat nerveus voor laser ontharing, maar het team van Lumière Studio heeft me volledig op mijn gemak gesteld. De behandeling ging vlot en het resultaat is geweldig. Al na 3 sessies enorm verschil!',
-  },
-  {
-    name: 'Nathalie Hendriksen',
-    treatment: 'Luxe Signature Facial',
-    rating: 5,
-    date: 'November 2025',
-    quote: 'De Signature Facial is pure verwennerij. 90 minuten lang werd ik helemaal in de watten gelegd. Mijn huid voelde daarna zo zacht en straalde. Dit wordt een vaste maandelijkse afspraak voor mij.',
-  },
-  {
-    name: 'Charlotte van Dijk',
-    treatment: 'Gel Nagels + Pedicure',
-    rating: 5,
-    date: 'Oktober 2025',
-    quote: 'Heerlijke ervaring! Ik heb zowel een gel manicure als pedicure laten doen. Beide behandelingen waren perfect uitgevoerd. De salon is prachtig ingericht en het personeel is super vriendelijk. 10/10!',
-  },
-];
 
 function StarRating({ count }: { count: number }) {
   return (
@@ -97,7 +52,7 @@ export default function GetuigenissenPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
               <div>
                 <div className="text-6xl font-light" style={{ fontFamily: "'Playfair Display', serif", color: '#2C2A26' }}>
-                  4.9
+                  {testimonialStats.rating}
                 </div>
                 <div className="flex justify-center mt-2">
                   <StarRating count={5} />
@@ -107,14 +62,14 @@ export default function GetuigenissenPage() {
               <div className="w-px h-16 hidden sm:block" style={{ backgroundColor: '#E5DDD5' }} />
               <div>
                 <div className="text-6xl font-light" style={{ fontFamily: "'Playfair Display', serif", color: '#2C2A26' }}>
-                  127
+                  {testimonialStats.count}
                 </div>
                 <p className="text-xs mt-2" style={{ color: '#7D7168' }}>Totaal reviews</p>
               </div>
               <div className="w-px h-16 hidden sm:block" style={{ backgroundColor: '#E5DDD5' }} />
               <div>
                 <div className="text-6xl font-light" style={{ fontFamily: "'Playfair Display', serif", color: '#2C2A26' }}>
-                  98%
+                  {testimonialStats.recommend}
                 </div>
                 <p className="text-xs mt-2" style={{ color: '#7D7168' }}>Zou ons aanbevelen</p>
               </div>
@@ -141,7 +96,6 @@ export default function GetuigenissenPage() {
                 className="relative p-8 bg-white"
                 style={{ borderRadius: '2px', boxShadow: '0 2px 24px rgba(44,42,38,0.07)' }}
               >
-                {/* Quote decoration */}
                 <div
                   className="absolute top-6 right-8 text-6xl leading-none select-none"
                   style={{ fontFamily: "'Playfair Display', serif", color: '#F2E8DF', lineHeight: 1 }}
@@ -177,14 +131,14 @@ export default function GetuigenissenPage() {
             Lees meer reviews op Google
           </h2>
           <p className="text-sm mb-8 max-w-md mx-auto" style={{ color: '#7D7168' }}>
-            Lees alle 127 reviews van onze klanten op Google Business.
+            Lees alle {testimonialStats.count} reviews van onze klanten op Google Business.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="https://g.page/r/lumierestudio"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-gold items-center gap-2 px-7 py-3 text-sm"
+              className="btn-gold inline-flex items-center gap-2 px-7 py-3 text-sm"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />

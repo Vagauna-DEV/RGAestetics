@@ -327,6 +327,14 @@ body {
   color: #B0A89E;
 }
 
+.form-input-error {
+  border-color: #B85C5C;
+}
+
+.form-input-error:focus {
+  border-color: #B85C5C;
+}
+
 /* Section padding */
 .section-padding {
   padding-top: 5rem;
@@ -355,4 +363,32 @@ body {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
   }
+}
+
+/* Muted text hover → gold (breadcrumb links, etc.) */
+.link-muted-hover {
+  transition: color 0.2s ease;
+}
+.link-muted-hover:hover {
+  color: #C4A882;
+}
+
+/* Footer social link hover — border changes */
+.social-link-footer {
+  border: 1px solid #4A4540;
+  transition: border-color 0.3s ease;
+}
+.social-link-footer:hover {
+  border-color: #C4A882;
+}
+
+/* Semi-transparent gold outline button (hero secondary CTAs on service pages) */
+.btn-semi-outline-gold {
+  border: 1px solid rgba(196, 168, 130, 0.5);
+  color: #C4A882;
+  background-color: transparent;
+  transition: border-color 0.3s ease;
+}
+.btn-semi-outline-gold:hover {
+  border-color: #C4A882;
 }

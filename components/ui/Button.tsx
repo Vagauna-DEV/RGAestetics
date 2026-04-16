@@ -25,36 +25,11 @@ const sizeStyles: Record<ButtonSize, { padding: string; fontSize: string }> = {
   lg: { padding: '1rem 2.5rem', fontSize: '1rem' },
 };
 
-const variantStyles: Record<ButtonVariant, React.CSSProperties> = {
-  primary: {
-    backgroundColor: '#C4A882',
-    color: '#FAFAF8',
-    border: '1px solid #C4A882',
-  },
-  outline: {
-    backgroundColor: 'transparent',
-    color: '#C4A882',
-    border: '1px solid #C4A882',
-  },
-  ghost: {
-    backgroundColor: 'transparent',
-    color: '#C4A882',
-    border: '1px solid transparent',
-  },
-};
-
-const variantHoverStyles: Record<ButtonVariant, React.CSSProperties> = {
-  primary: {
-    backgroundColor: '#A8865C',
-    borderColor: '#A8865C',
-  },
-  outline: {
-    backgroundColor: '#C4A882',
-    color: '#FAFAF8',
-  },
-  ghost: {
-    color: '#A8865C',
-  },
+// Colors and hover come from CSS classes in globals.css
+const variantClass: Record<ButtonVariant, string> = {
+  primary: 'btn-primary',
+  outline: 'btn-outline',
+  ghost: 'btn-ghost',
 };
 
 export default function Button({
@@ -69,9 +44,6 @@ export default function Button({
   external = false,
 }: ButtonProps) {
   const baseStyle: React.CSSProperties = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     fontFamily: "'DM Sans', sans-serif",
     fontWeight: 500,
     letterSpacing: '0.03em',
@@ -79,31 +51,17 @@ export default function Button({
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.6 : 1,
     textDecoration: 'none',
-    transition: 'background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease',
     whiteSpace: 'nowrap' as const,
     ...sizeStyles[size],
-    ...variantStyles[variant],
   };
 
   const content = (
     <motion.span
+      className={`btn ${variantClass[variant]} ${className}`}
       style={baseStyle}
-      className={className}
       whileHover={disabled ? {} : { scale: 1.02 }}
       whileTap={disabled ? {} : { scale: 0.98 }}
       transition={{ duration: 0.15 }}
-      onMouseEnter={(e) => {
-        if (!disabled) {
-          const hoverStyle = variantHoverStyles[variant];
-          Object.assign((e.currentTarget as HTMLElement).style, hoverStyle);
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (!disabled) {
-          const originalStyle = variantStyles[variant];
-          Object.assign((e.currentTarget as HTMLElement).style, originalStyle);
-        }
-      }}
     >
       {children}
     </motion.span>

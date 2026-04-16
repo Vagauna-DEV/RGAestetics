@@ -2,64 +2,75 @@ import type { MetadataRoute } from 'next';
 
 export const dynamic = 'force-static';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://lumierestudio.nl';
-  const lastModified = new Date();
+const baseUrl = 'https://lumierestudio.nl';
 
+export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: baseUrl,
-      lastModified,
+      lastModified: '2025-01-15',
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: `${baseUrl}/over-ons`,
-      lastModified,
+      lastModified: '2025-01-15',
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/diensten`,
-      lastModified,
+      lastModified: '2025-01-15',
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
       url: `${baseUrl}/diensten/laser-ontharing`,
-      lastModified,
+      lastModified: '2025-01-15',
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/diensten/gelnagels`,
-      lastModified,
+      lastModified: '2025-01-15',
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/diensten/gezichtsbehandelingen`,
-      lastModified,
+      lastModified: '2025-01-15',
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/galerij`,
-      lastModified,
+      lastModified: '2025-01-15',
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${baseUrl}/getuigenissen`,
-      lastModified,
+      lastModified: '2025-01-15',
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified,
+      lastModified: '2025-01-15',
       changeFrequency: 'monthly',
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/privacy`,
+      lastModified: '2025-01-15',
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/algemene-voorwaarden`,
+      lastModified: '2025-01-15',
+      changeFrequency: 'yearly',
+      priority: 0.3,
     },
   ];
 }

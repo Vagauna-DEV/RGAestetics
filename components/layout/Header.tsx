@@ -4,25 +4,22 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { getLocaleFromPath, localizePath, type Locale } from '@/lib/i18n';
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/diensten', label: 'Diensten' },
+  { href: '/over-ons', label: 'Over Ons' },
+  { href: '/galerij', label: 'Galerij' },
+  { href: '/contact', label: 'Contact' },
+];
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname() ?? '/';
-  const locale = getLocaleFromPath(pathname);
-  const navLinks = getNavLinks(locale);
-  const bookHref = localizePath('/contact', locale);
-  const languageLinks = {
-    nl: localizePath(pathname, 'nl'),
-    en: localizePath(pathname, 'en'),
-  };
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -33,10 +30,7 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
-
-    return () => {
-      document.body.style.overflow = '';
-    };
+    return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
   const headerBg = scrolled
@@ -52,7 +46,7 @@ export default function Header() {
     >
       <div className="container-custom">
         <div className="flex items-center justify-between h-20">
-          <Link href={localizePath('/', locale)} className="flex-shrink-0">
+          <Link href="/" className="flex-shrink-0">
             <motion.span
               className="text-2xl tracking-wide"
               style={{
@@ -71,8 +65,7 @@ export default function Header() {
             {navLinks.map((link) => {
               const isActive =
                 pathname === link.href ||
-                (link.href !== localizePath('/', locale) &&
-                  pathname.startsWith(`${link.href}/`));
+                (link.href !== '/' && pathname.startsWith(`${link.href}/`));
 
               return (
                 <Link
@@ -101,36 +94,19 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-4">
-            <LanguageToggle
-              currentLocale={locale}
-              nlHref={languageLinks.nl}
-              enHref={languageLinks.en}
-              mutedColor={scrolled ? '#7D7168' : 'rgba(250,250,248,0.72)'}
-            />
+          <div className="hidden lg:flex items-center">
             <Link
-              href={bookHref}
-              className="inline-flex items-center px-6 py-2.5 text-sm font-medium tracking-wide transition-all duration-300"
-              style={{
-                backgroundColor: '#C4A882',
-                color: '#FAFAF8',
-                borderRadius: '2px',
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#A8865C';
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#C4A882';
-              }}
+              href="/contact"
+              className="btn-gold inline-flex items-center px-6 py-2.5 text-sm font-medium tracking-wide"
             >
-              {locale === 'en' ? 'Book Now' : 'Afspraak Maken'}
+              Afspraak Maken
             </Link>
           </div>
 
           <button
             className="lg:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 focus:outline-none"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={locale === 'en' ? 'Open menu' : 'Menu openen'}
+            aria-label="Menu openen"
             aria-expanded={mobileOpen}
           >
             <motion.span
@@ -168,8 +144,7 @@ export default function Header() {
               {navLinks.map((link, index) => {
                 const isActive =
                   pathname === link.href ||
-                  (link.href !== localizePath('/', locale) &&
-                    pathname.startsWith(`${link.href}/`));
+                  (link.href !== '/' && pathname.startsWith(`${link.href}/`));
 
                 return (
                   <motion.div
@@ -196,24 +171,13 @@ export default function Header() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: navLinks.length * 0.07, duration: 0.3 }}
-                className="pt-4 space-y-4"
+                className="pt-4"
               >
-                <LanguageToggle
-                  currentLocale={locale}
-                  nlHref={languageLinks.nl}
-                  enHref={languageLinks.en}
-                  mutedColor="#7D7168"
-                />
                 <Link
-                  href={bookHref}
-                  className="block w-full text-center py-3 text-sm font-medium tracking-wide"
-                  style={{
-                    backgroundColor: '#C4A882',
-                    color: '#FAFAF8',
-                    borderRadius: '2px',
-                  }}
+                  href="/contact"
+                  className="btn-gold block w-full text-center py-3 text-sm font-medium tracking-wide"
                 >
-                  {locale === 'en' ? 'Book Now' : 'Afspraak Maken'}
+                  Afspraak Maken
                 </Link>
               </motion.div>
             </div>
@@ -221,56 +185,5 @@ export default function Header() {
         )}
       </AnimatePresence>
     </header>
-  );
-}
-
-function getNavLinks(locale: Locale) {
-  return [
-    { href: localizePath('/', locale), label: 'Home' },
-    { href: localizePath('/diensten', locale), label: locale === 'en' ? 'Services' : 'Diensten' },
-    { href: localizePath('/over-ons', locale), label: locale === 'en' ? 'About' : 'Over Ons' },
-    { href: localizePath('/galerij', locale), label: locale === 'en' ? 'Gallery' : 'Galerij' },
-    { href: localizePath('/contact', locale), label: 'Contact' },
-  ];
-}
-
-function LanguageToggle({
-  currentLocale,
-  nlHref,
-  enHref,
-  mutedColor,
-}: {
-  currentLocale: Locale;
-  nlHref: string;
-  enHref: string;
-  mutedColor: string;
-}) {
-  return (
-    <div
-      className="inline-flex items-center p-1 rounded-full border"
-      style={{ borderColor: 'rgba(196,168,130,0.35)' }}
-      aria-label="Language switcher"
-    >
-      {[
-        { locale: 'nl' as const, href: nlHref, label: 'NL' },
-        { locale: 'en' as const, href: enHref, label: 'EN' },
-      ].map((item) => {
-        const isActive = currentLocale === item.locale;
-
-        return (
-          <Link
-            key={item.locale}
-            href={item.href}
-            className="px-3 py-1 text-xs font-semibold tracking-wide rounded-full transition-colors duration-300"
-            style={{
-              backgroundColor: isActive ? '#C4A882' : 'transparent',
-              color: isActive ? '#FAFAF8' : mutedColor,
-            }}
-          >
-            {item.label}
-          </Link>
-        );
-      })}
-    </div>
   );
 }

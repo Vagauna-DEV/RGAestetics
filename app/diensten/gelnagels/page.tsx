@@ -1,8 +1,18 @@
-'use client';
-
-import { useState } from 'react';
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import FAQItem from '@/components/ui/FAQItem';
+
+export const metadata: Metadata = {
+  title: 'Gel Nagels | Lumière Studio',
+  description:
+    'Professionele gel nagels in Amsterdam bij Lumière Studio. Tot 4 weken lang perfecte nagels. Gel manicure, extensions, nail art en pedicure vanaf € 35.',
+  openGraph: {
+    title: 'Gel Nagels | Lumière Studio',
+    description: 'Perfecte, duurzame nagels die weken mooi blijven. Vakmanschap in elk detail.',
+    url: 'https://lumierestudio.nl/diensten/gelnagels',
+  },
+};
 
 const benefits = [
   'Tot 4 weken lang perfect uitziende nagels',
@@ -41,27 +51,6 @@ const faqs = [
   { q: 'Hoe lang moet ik wachten voor een refill?', a: 'Een refill is ideaal na 2–3 weken, wanneer er zichtbare nagelgroei is maar de gel nog goed gehecht zit. Wacht niet langer dan 4 weken voor een refill.' },
 ];
 
-function FAQItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div style={{ borderBottom: '1px solid #E5DDD5' }}>
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full text-left py-5 flex items-center justify-between gap-4"
-        style={{ background: 'none', border: 'none', cursor: 'pointer' }}
-      >
-        <span className="text-sm font-medium" style={{ color: '#2C2A26' }}>{q}</span>
-        <span className="flex-shrink-0 transition-transform duration-300" style={{ transform: open ? 'rotate(45deg)' : 'rotate(0deg)', color: '#C4A882' }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
-        </span>
-      </button>
-      {open && <div className="pb-5"><p className="text-sm leading-relaxed" style={{ color: '#7D7168' }}>{a}</p></div>}
-    </div>
-  );
-}
-
 export default function GelNagelsPage() {
   return (
     <>
@@ -71,9 +60,9 @@ export default function GelNagelsPage() {
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(44,42,38,0.85), rgba(44,42,38,0.97))' }} />
         <div className="container-custom relative z-10">
           <nav className="mb-8 flex items-center gap-2 text-xs" style={{ color: '#6B6560' }}>
-            <Link href="/" style={{ color: '#6B6560' }} onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#C4A882'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#6B6560'; }}>Home</Link>
+            <Link href="/" className="link-muted-hover" style={{ color: '#6B6560' }}>Home</Link>
             <span>/</span>
-            <Link href="/diensten" style={{ color: '#6B6560' }} onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#C4A882'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#6B6560'; }}>Diensten</Link>
+            <Link href="/diensten" className="link-muted-hover" style={{ color: '#6B6560' }}>Diensten</Link>
             <span>/</span>
             <span style={{ color: '#C4A882' }}>Gel Nagels</span>
           </nav>
@@ -87,10 +76,10 @@ export default function GelNagelsPage() {
               Perfecte, duurzame nagels die weken mooi blijven. Van klassiek naturel tot creatieve nail art — vakmanschap in elk detail.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link href="/contact" className="inline-flex items-center justify-center px-7 py-3 text-sm font-medium tracking-wide transition-all duration-300" style={{ backgroundColor: '#C4A882', color: '#FAFAF8', borderRadius: '2px' }} onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#A8865C'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#C4A882'; }}>
+              <Link href="/contact" className="btn-gold inline-flex items-center justify-center px-7 py-3 text-sm font-medium tracking-wide">
                 Afspraak Maken
               </Link>
-              <Link href="#prijzen" className="inline-flex items-center justify-center px-7 py-3 text-sm font-medium tracking-wide transition-all duration-300" style={{ border: '1px solid rgba(196,168,130,0.5)', color: '#C4A882', borderRadius: '2px' }} onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = '#C4A882'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(196,168,130,0.5)'; }}>
+              <Link href="#prijzen" className="btn-semi-outline-gold inline-flex items-center justify-center px-7 py-3 text-sm font-medium tracking-wide" style={{ borderRadius: '2px' }}>
                 Bekijk Prijzen
               </Link>
             </div>
@@ -208,7 +197,7 @@ export default function GelNagelsPage() {
           <p className="text-sm mb-8 max-w-md mx-auto leading-relaxed" style={{ color: '#9E9188' }}>
             Maak vandaag nog een afspraak en verlaat onze salon met prachtige nagels.
           </p>
-          <Link href="/contact" className="inline-flex items-center justify-center px-8 py-3.5 text-sm font-medium tracking-wide transition-all duration-300" style={{ backgroundColor: '#C4A882', color: '#FAFAF8', borderRadius: '2px' }} onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#A8865C'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#C4A882'; }}>
+          <Link href="/contact" className="btn-gold inline-flex items-center justify-center px-8 py-3.5 text-sm font-medium tracking-wide">
             Afspraak Maken
           </Link>
         </div>
